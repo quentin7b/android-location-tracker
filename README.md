@@ -82,7 +82,7 @@ Here is an example of call:
 	}
 
 In this case, when a location is found, the tracker will not call `onLocationFound()` again during *30 minutes*.
-Moreover, if the new location distance with the older one is less than 100m, `onLocationFound()` will not be called.
+Moreover, if the distance between the new location and the older one is less than 100m, `onLocationFound()` will not be called.
 
 Be aware that the *time* parameter's priority is higher than the *distance* parameter. So even if the user has moved from 2km, the `tracker` will call `onLocationFound()` only after *30 minutes*.
 

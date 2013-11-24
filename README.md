@@ -14,6 +14,12 @@ For now the only version is *androidsimplelocationtracker-v1.jar*
 Copy the *androidsimplelocationtracker-vX.jar* file in your Android project *libs/* folder.
 Add it to your *Build Path*.
 
+Dont forget to add the following permissions to your *AndroidManifest.xml*
+
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
 ### Use
 
 As its name says, it's a *simple* library.

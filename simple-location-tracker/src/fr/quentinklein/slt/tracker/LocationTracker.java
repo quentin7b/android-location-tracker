@@ -18,16 +18,24 @@ public abstract class LocationTracker implements LocationListener {
 	 * Tag used for logs
 	 */
 	private static final String TAG = "LocationTracker";
+	/**
+	 * The default minimum amount of time between two location updates 
+	 */
+	public static final long DEFAULT_MIN_TIME_BETWEEN_UPDATES = 1 * 60 * 1000;
+	/**
+	 * The default minimum amount of meters between two location updates 
+	 */
+	public static final float DEFAULT_MIN_METERS_BETWEEN_UPDATES = 100;
 
 	/**
-	 * The minimum amount of time between two location updates, by default its value is 60s
+	 * The minimum amount of time between two location updates, by default its value is {@link DEFAULT_MIN_TIME_BETWEEN_UPDATES}
 	 * This time is in milliseconds
 	 */
-	private static long timeBetweenUpdates = 1 * 60 * 1000;
+	private long timeBetweenUpdates;
 	/**
-	 * The minimum amount of meters between two location updates, by default its value is 100m
+	 * The minimum amount of meters between two location updates, by default its value is {@link DEFAULT_MIN_METERS_BETWEEN_UPDATES}
 	 */
-	private static float metersBetweenUpdates = 100;
+	private float metersBetweenUpdates;
 	/**
 	 * The user location
 	 * This value is static because, wherever you call a LocationTracker, user location is the same
@@ -71,10 +79,26 @@ public abstract class LocationTracker implements LocationListener {
 	 * @param usePassive <ul><li>true if Passive usage is wanted</li><li>false otherwise</li></ul>
 	 */
 	public LocationTracker(Context context, boolean useGPS, boolean useNetwork, boolean usePassive){
+		this(context, useGPS, useNetwork, usePassive, DEFAULT_MIN_TIME_BETWEEN_UPDATES, DEFAULT_MIN_METERS_BETWEEN_UPDATES);
+	}
+	
+	/**
+	 * Customized LocationTracker, uses the specified services and starts listening for a location.
+	 * @param context Android context, uiContext is not mandatory.
+	 * @param useGPS <ul><li>true if GPS usage is wanted</li><li>false otherwise</li></ul>
+	 * @param useNetwork <ul><li>true if Network usage is wanted</li><li>false otherwise</li></ul>
+	 * @param usePassive <ul><li>true if Passive usage is wanted</li><li>false otherwise</li></ul>
+	 * @param minTimeBetweenUpdates the minimum amount of time between two location updates in milliseconds
+	 * @param minMetersBetweenUpdates the minimum amount of meters between two location updates
+	 */
+	public LocationTracker(Context context, boolean useGPS, boolean useNetwork, boolean usePassive, long minTimeBetweenUpdates, float minMetersBetweenUpdates){
 		// FOA, get the vars
 		this.useGPS = useGPS;
 		this.useNetwork = useNetwork;
 		this.usePassive = usePassive;
+		// Set cusom metrics
+		this.metersBetweenUpdates = minMetersBetweenUpdates;
+		this.timeBetweenUpdates = minTimeBetweenUpdates;
 		// Get the location manager
 		this.locationManagerService = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 		// default
@@ -89,22 +113,6 @@ public abstract class LocationTracker implements LocationListener {
 		}
 		// Start Listen for updates
 		startListen();
-	}
-	
-	/**
-	 * Changes the minimum amount of time between to location updates
-	 * @param minTimeBetweenUpdates the minimum amount of time between updates in milliseconds
-	 */
-	public static void setMinTimeBetweenUpdates(long minTimeBetweenUpdates){
-		LocationTracker.timeBetweenUpdates = minTimeBetweenUpdates;
-	}
-
-	/**
-	 * Changes the minimum amount of meters between to location updates
-	 * @param minMetersBetweenUpdates the minimum amount of meters between updates
-	 */
-	public static void setMinMetersBetweenUpdates(float minMetersBetweenUpdates){
-		LocationTracker.metersBetweenUpdates = minMetersBetweenUpdates;
 	}
 
 	/**

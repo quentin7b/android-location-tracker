@@ -19,21 +19,20 @@ public abstract class LocationTracker implements LocationListener {
 	 */
 	private static final String TAG = "LocationTracker";
 	/**
-	 * The default minimum amount of time between two location updates 
+	 * The default time interval between location updates 
 	 */
 	public static final long DEFAULT_MIN_TIME_BETWEEN_UPDATES = 1 * 60 * 1000;
 	/**
-	 * The default minimum amount of meters between two location updates 
+	 * The default distance between location updates 
 	 */
 	public static final float DEFAULT_MIN_METERS_BETWEEN_UPDATES = 100;
 
 	/**
-	 * The minimum amount of time between two location updates, by default its value is {@link DEFAULT_MIN_TIME_BETWEEN_UPDATES}
-	 * This time is in milliseconds
+	 * The minimum time interval between location updates, in milliseconds by default its value is {@link DEFAULT_MIN_TIME_BETWEEN_UPDATES}
 	 */
 	private long timeBetweenUpdates;
 	/**
-	 * The minimum amount of meters between two location updates, by default its value is {@link DEFAULT_MIN_METERS_BETWEEN_UPDATES}
+	 * The minimum distance between location updates in meters, by default its value is {@link DEFAULT_MIN_METERS_BETWEEN_UPDATES}
 	 */
 	private float metersBetweenUpdates;
 	/**
@@ -88,8 +87,8 @@ public abstract class LocationTracker implements LocationListener {
 	 * @param useGPS <ul><li>true if GPS usage is wanted</li><li>false otherwise</li></ul>
 	 * @param useNetwork <ul><li>true if Network usage is wanted</li><li>false otherwise</li></ul>
 	 * @param usePassive <ul><li>true if Passive usage is wanted</li><li>false otherwise</li></ul>
-	 * @param minTimeBetweenUpdates the minimum amount of time between two location updates in milliseconds
-	 * @param minMetersBetweenUpdates the minimum amount of meters between two location updates
+	 * @param minTimeBetweenUpdates the minimum time interval between location updates in milliseconds
+	 * @param minMetersBetweenUpdates the minimum distance between location updates, in meters
 	 */
 	public LocationTracker(Context context, boolean useGPS, boolean useNetwork, boolean usePassive, long minTimeBetweenUpdates, float minMetersBetweenUpdates){
 		// FOA, get the vars

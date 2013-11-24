@@ -164,7 +164,7 @@ public abstract class LocationTracker implements LocationListener {
 	 * @see android.location.LocationListener#onLocationChanged(android.location.Location)
 	 */
 	@Override
-	public void onLocationChanged(Location location) {
+	public final void onLocationChanged(Location location) {
 		Log.i(TAG, "Location has changed, new location is "+location);
 		LocationTracker.location = new Location(location);
 		onLocationChanged(location);

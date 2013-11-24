@@ -20,10 +20,12 @@ public abstract class LocationTracker implements LocationListener {
 	private static final String TAG = "LocationTracker";
 	/**
 	 * The default time interval between location updates 
+	 * Its value is 5 minutes
 	 */
-	public static final long DEFAULT_MIN_TIME_BETWEEN_UPDATES = 1 * 60 * 1000;
+	public static final long DEFAULT_MIN_TIME_BETWEEN_UPDATES = 5 * 60 * 1000;
 	/**
 	 * The default distance between location updates 
+	 * Its value is 100m
 	 */
 	public static final float DEFAULT_MIN_METERS_BETWEEN_UPDATES = 100;
 

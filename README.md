@@ -149,8 +149,28 @@ v1.1 Adds
 
 The only thing this method is doing is calling `onLocationChanged()` with the static field `location` as a parameter.
 
-For example, if in your code, you called a `LocationTracker` at a time and do something with the location.... Now you call it again in a new instance and you want a location as quick as possible. 
+For example, if in your code, you called a `LocationTracker` at a time and did something with the location.... Now you call it again, in a new instance of `LocationTracker`, and you want a location as quick as possible. 
 Just call `quickFix()` to get the last known location.
+
+Here is a code example
+
+	new LocationTracker(context){
+		@Override
+		public void onLocationFound(Location location) {
+			// Do some stuff when a new GPS Location has been found
+		}
+	}.quickFix();
+
+Or if it is stored in a variable
+
+	LocationTracker myTracker = new LocationTracker(context){
+		@Override
+		public void onLocationFound(Location location) {
+			// Do some stuff when a new GPS Location has been found
+		}
+	};
+
+	myTracker.quickFix();
 
 ### Contact & Questions
 

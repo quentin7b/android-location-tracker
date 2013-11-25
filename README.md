@@ -9,8 +9,6 @@ JavaDoc can be found at [quentinklein.fr/aslt/javadoc](http://quentinklein.fr/as
 
 To install Android Location Tracker, just download the *.jar* file at [quentinklein.fr/aslt/jar](http://quentinklein.fr/aslt/jar)
 
-For now the only version is *androidsimplelocationtracker-v1.jar*
-
 Copy the *androidsimplelocationtracker-vX.jar* file in your Android project *libs/* folder.
 Add it to your *Build Path*.
 
@@ -141,7 +139,20 @@ Excepts the `onLocationChanged()` method, you can override all the [LocationList
 <li>onStatusChanged(String provider, int status, Bundle extras)</li>
 </ul>
 
+---
+v1.1 Adds
+---
+
+### QuickFix
+
+`LocationTracker` has a new method called `quickFix()`.
+
+The only thing this method is doing is calling `onLocationChanged()` with the static field `location` as a parameter.
+
+For example, if in your code, you called a `LocationTracker` at a time and do something with the location.... Now you call it again in a new instance and you want a location as quick as possible. 
+Just call `quickFix()` to get the last known location.
+
 ### Contact & Questions
 
 If you have any questions, fell free to send me a mail.
-You can also fork this project !
+You can also fork this project, or open an issue :)

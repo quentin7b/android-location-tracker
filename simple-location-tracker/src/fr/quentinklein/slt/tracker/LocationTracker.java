@@ -160,7 +160,7 @@ public abstract class LocationTracker implements LocationListener {
 	}
 	
 	/**
-	 * Best effort, it calls {@link onLocationChanged} with static field named {@link location} if it is not null
+	 * Best effort, it calls {@link #onLocationChanged(Location)} with static field named {@link #location} if it is not null
 	 */
 	public final void quickFix(){
 		if(LocationTracker.location != null){

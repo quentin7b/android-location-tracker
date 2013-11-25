@@ -158,6 +158,15 @@ public abstract class LocationTracker implements LocationListener {
 			Log.i(TAG, "LocationTracked wasn't listening for location updates anyway");
 		}
 	}
+	
+	/**
+	 * Best effort, it calls {@link onLocationChanged} with static field named {@link location} if it is not null
+	 */
+	public final void quickFix(){
+		if(LocationTracker.location != null){
+			onLocationChanged(LocationTracker.location);
+		}
+	}
 
 	/**
 	 * Called when the tracker had found a location

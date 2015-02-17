@@ -2,3 +2,9 @@
 /bin
 /libs
 /doc
+/.idea
+local.properties
+.classpath
+.project
+.settings
+*.iml

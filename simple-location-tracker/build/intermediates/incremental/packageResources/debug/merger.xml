@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="C:\Users\yasir.ali\Documents\GitHub\android-location-tracker\simple-location-tracker\res"><file name="ic_launcher" path="C:\Users\yasir.ali\Documents\GitHub\android-location-tracker\simple-location-tracker\res\drawable-hdpi\ic_launcher.png" qualifiers="hdpi-v4" type="drawable"/><file name="ic_launcher" path="C:\Users\yasir.ali\Documents\GitHub\android-location-tracker\simple-location-tracker\res\drawable-mdpi\ic_launcher.png" qualifiers="mdpi-v4" type="drawable"/><file name="ic_launcher" path="C:\Users\yasir.ali\Documents\GitHub\android-location-tracker\simple-location-tracker\res\drawable-xhdpi\ic_launcher.png" qualifiers="xhdpi-v4" type="drawable"/><file name="ic_launcher" path="C:\Users\yasir.ali\Documents\GitHub\android-location-tracker\simple-location-tracker\res\drawable-xxhdpi\ic_launcher.png" qualifiers="xxhdpi-v4" type="drawable"/><file path="C:\Users\yasir.ali\Documents\GitHub\android-location-tracker\simple-location-tracker\res\values\strings.xml" qualifiers=""><string name="app_name">simple-location-tracker</string></file><file path="C:\Users\yasir.ali\Documents\GitHub\android-location-tracker\simple-location-tracker\res\values\styles.xml" qualifiers=""><style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style><style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style></file><file path="C:\Users\yasir.ali\Documents\GitHub\android-location-tracker\simple-location-tracker\res\values-v11\styles.xml" qualifiers="v11"><style name="AppBaseTheme" parent="android:Theme.Holo.Light">
+        <!-- API 11 theme customizations can go here. -->
+    </style></file><file path="C:\Users\yasir.ali\Documents\GitHub\android-location-tracker\simple-location-tracker\res\values-v14\styles.xml" qualifiers="v14"><style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <!-- API 14 theme customizations can go here. -->
+    </style></file></source><source path="C:\Users\yasir.ali\Documents\GitHub\android-location-tracker\simple-location-tracker\build\generated\res\rs\debug"/><source path="C:\Users\yasir.ali\Documents\GitHub\android-location-tracker\simple-location-tracker\build\generated\res\generated\debug"/></dataSet><dataSet config="debug"><source path="C:\Users\yasir.ali\Documents\GitHub\android-location-tracker\simple-location-tracker\build-types\debug\res"/></dataSet><mergedItems/></merger>

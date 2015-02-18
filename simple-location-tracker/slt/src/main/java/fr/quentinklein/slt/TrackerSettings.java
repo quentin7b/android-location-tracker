@@ -31,6 +31,7 @@ package fr.quentinklein.slt;
  * </p>
  */
 public class TrackerSettings {
+    public static final TrackerSettings DEFAULT = new TrackerSettings();
     /**
      * The default time interval between location updates
      * Its value is 5 minutes

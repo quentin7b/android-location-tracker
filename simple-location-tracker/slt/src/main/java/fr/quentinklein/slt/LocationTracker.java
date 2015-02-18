@@ -45,11 +45,18 @@ public abstract class LocationTracker implements LocationListener {
      */
     private TrackerSettings mTrackerSettings;
 
+    /**
+     * Default LocationTracker, uses default values for settings
+     * @param context Android context, uiContext is not mandatory.
+     */
+    public LocationTracker(Context context) {
+        this(context, TrackerSettings.DEFAULT);
+    }
 
     /**
      * Customized LocationTracker, uses the specified services and starts listening for a location.
      * @param context Android context, uiContext is not mandatory.
-     * @param trackerSettings {@link TrackerSettings}
+     * @param trackerSettings {@link TrackerSettings}, the tracker settings
      */
     public LocationTracker(Context context, TrackerSettings trackerSettings) {
 

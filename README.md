@@ -7,10 +7,7 @@ JavaDoc can be found at [quentinklein.fr/aslt/javadoc](http://quentinklein.fr/as
 
 ### Installation
 
-To install Android Location Tracker, just download the *.jar* file at [quentinklein.fr/aslt/jar](http://quentinklein.fr/aslt/jar)
-
-Copy the *androidsimplelocationtracker-vX.jar* file in your Android project *libs/* folder.
-Add it to your *Build Path*.
+Clone this repository and import the `slt` module as a module dependency in `Android Studio`
 
 Dont forget to add the following permissions to your *AndroidManifest.xml*
 
@@ -23,10 +20,8 @@ Dont forget to add the following permissions to your *AndroidManifest.xml*
 As its name says, it's a *simple* library.
 To create a tracker you just need to add the below code in your Android Activity/Service
 
-	// In this case, this is a context, 
-	// you can pass an ui Context but it is not mandatory getApplicationContext()
-	// would also works
-	new LocationTracker(this) {
+	// You can pass an ui Context but it is not mandatory getApplicationContext() would also works
+	new LocationTracker(context) {
 		
 		@Override
 		public void onLocationFound(Location location) {
@@ -36,16 +31,20 @@ To create a tracker you just need to add the below code in your Android Activity
 
 And it's done, as soon as a location has been found, it will call the `onLocationFound()` method and you can do the job.
 
-### Providers custom use
+### Provide custom use
 
 You can call a `LocationTracker` with custom parameters.
 To do this, use the following constructor
 
-	LocationTracker(Context context, boolean useGPS, boolean useNetwork, boolean usePassive)
+	LocationTracker(Context context, TrackerSettings settings)
 
 As an example, considering my `Activity` is named *MyActivity*
 
-	new LocationTracker(MyActivity.this, true, false, false) {
+	TrackerSettings settings = new TrackerSettings();
+	settings.setUseGPS(true);
+	settings.setUseNetwork(false);
+	settings.setUsePassive(false);
+	new LocationTracker(MyActivity.this, settings) {
 		
 		@Override
 		public void onLocationFound(Location location) {
@@ -64,14 +63,16 @@ This, will call a location tracker that is looking *ONLY* for *GPS* updates.
 <li> The minimum distance between location updates, in meters </li>
 </ul>
 
-To specify those parameters, `LocationTracker` has another constructor
-	
-	public LocationTracker(	Context context, boolean useGPS, boolean useNetwork, boolean usePassive, 
-							long minTimeBetweenUpdates, float minMetersBetweenUpdates)
-
+To specify those parameters, `LocationTracker` you can set more settings.
 Here is an example of call:
 	
-	new LocationTracker(this, true, true, true, (30 * 60 * 1000), 100) {
+	TrackerSettings settings = new TrackerSettings();
+	settings.setUseGPS(true);
+	settings.setUseNetwork(true);
+	settings.setUsePassive(true);
+	settings.setTimeBetweenUpdates(30 * 60 * 1000);
+	settings.setMetersBetweenUpdates(100);
+	new LocationTracker(this, settings) {
 		
 		@Override
 		public void onLocationFound(Location location) {
@@ -92,7 +93,7 @@ By default, after a `LocationTracker` is created, it automatically starts listen
 If you want to *stop* listening for updates, just call the `stopListen()` method.
 For example, if you need a *one shot* position, you can do that:
 
-	new LocationTracker(MyActivity.this, true, false, false) {
+	new LocationTracker(MyActivity.this) {
 		
 		@Override
 		public void onLocationFound(Location location) {
@@ -138,6 +139,13 @@ Excepts the `onLocationChanged()` method, you can override all the [LocationList
 <li>onProviderEnabled(String provider)</li>
 <li>onStatusChanged(String provider, int status, Bundle extras)</li>
 </ul>
+
+---
+v2.0 New settings version
+---
+
+Add the `TrackerSettings` object to handle the multiple settings instead of parameters.
+Add a default `timeout` of `1min` before the tracker stops itself if no location found.
 
 ---
 v1.1 Adds

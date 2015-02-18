@@ -31,6 +31,17 @@ package fr.quentinklein.slt;
  * </p>
  */
 public class TrackerSettings {
+    /**
+     * Basic tracker settings, with all the default parameters
+     * <ul>
+     *     <li>5min between updates</li>
+     *     <li>100m between updates</li>
+     *     <li>100m between updates</li>
+     *     <li>1m timeout</li>
+     *     <li>Uses Network</li>
+     *     <li>Uses Passive</li>
+     * </ul>
+     */
     public static final TrackerSettings DEFAULT = new TrackerSettings();
     /**
      * The default time interval between location updates
@@ -62,17 +73,17 @@ public class TrackerSettings {
     private int timeout = -1;
 
     /**
-     * Specifies if tracker should use the GPS
+     * Specifies if tracker should use the GPS (default is true)
      */
-    private boolean useGPS;
+    private boolean useGPS = true;
     /**
-     * Specifies if tracker should use the Network
+     * Specifies if tracker should use the Network (default is true)
      */
-    private boolean useNetwork;
+    private boolean useNetwork = true;
     /**
-     * Specifies if tracker should use the Passive provider
+     * Specifies if tracker should use the Passive provider (default is true)
      */
-    private boolean usePassive;
+    private boolean usePassive = true;
 
     public void setTimeBetweenUpdates(long timeBetweenUpdates) {
         this.timeBetweenUpdates = timeBetweenUpdates;

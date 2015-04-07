@@ -7,7 +7,7 @@ JavaDoc can be found at [quentinklein.fr/aslt/javadoc](http://quentinklein.fr/as
 
 ### Installation
 
-Either this repository and import the `slt` module as a module dependency in `Android Studio`
+Either clone this repository and import the `slt` module as a module dependency in `Android Studio`
 Or add this to your `build.gradle` file
 
 	repositories {

@@ -7,7 +7,18 @@ JavaDoc can be found at [quentinklein.fr/aslt/javadoc](http://quentinklein.fr/as
 
 ### Installation
 
-Clone this repository and import the `slt` module as a module dependency in `Android Studio`
+Either this repository and import the `slt` module as a module dependency in `Android Studio`
+Or add this to your `build.gradle` file
+
+	repositories {
+	    maven {
+	        url "https://jitpack.io"
+	    }
+	}
+	
+	dependencies {
+	        compile 'com.github.quentin7b:android-location-tracker:2.0'
+	}
 
 Dont forget to add the following permissions to your *AndroidManifest.xml*
 

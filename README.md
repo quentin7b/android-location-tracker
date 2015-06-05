@@ -3,8 +3,6 @@ android-location-tracker
 
 Android Simple Location Tracker is an Android library that helps you get user location with a object named `LocationTracker`
 
-JavaDoc can be found at [quentinklein.fr/aslt/javadoc](http://quentinklein.fr/aslt/javadoc)
-
 ### Installation
 
 Either clone this repository and import the `slt` module as a module dependency in `Android Studio`

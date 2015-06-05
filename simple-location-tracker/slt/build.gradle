@@ -8,7 +8,7 @@ android {
         minSdkVersion 8
         targetSdkVersion 22
         versionCode 3
-        versionName "1.3"
+        versionName "2.1"
     }
 
     libraryVariants.all { variant ->

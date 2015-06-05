@@ -57,7 +57,7 @@ public class TrackerSettings {
      * The default value of timeout that helps to stop the listener if the listener is taking too much time
      * Its value is 1 minutes
      */
-    public static final int DEFAULT_TIMEOUT = 1 * 60 * 1000;
+    public static final int DEFAULT_TIMEOUT = 60 * 1000;
 
     /**
      * The minimum time interval between location updates, in milliseconds by default its value is {@link #DEFAULT_MIN_TIME_BETWEEN_UPDATES}

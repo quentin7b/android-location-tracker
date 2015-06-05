@@ -10,10 +10,9 @@ import android.util.Log;
 
 /**
  * @author Quentin Klein <klein.quentin@gmail.com>, Yasir.Ali <ali.yasir0@gmail.com>
- * <p>
- * Helper that tracks user location
- * </p>
- *
+ *         <p>
+ *         Helper that tracks user location
+ *         </p>
  */
 public abstract class LocationTracker implements LocationListener {
 
@@ -47,6 +46,7 @@ public abstract class LocationTracker implements LocationListener {
 
     /**
      * Default LocationTracker, uses default values for settings
+     *
      * @param context Android context, uiContext is not mandatory.
      */
     public LocationTracker(Context context) {
@@ -55,7 +55,8 @@ public abstract class LocationTracker implements LocationListener {
 
     /**
      * Customized LocationTracker, uses the specified services and starts listening for a location.
-     * @param context Android context, uiContext is not mandatory.
+     *
+     * @param context         Android context, uiContext is not mandatory.
      * @param trackerSettings {@link TrackerSettings}, the tracker settings
      */
     public LocationTracker(Context context, TrackerSettings trackerSettings) {
@@ -145,7 +146,17 @@ public abstract class LocationTracker implements LocationListener {
     }
 
     /**
+     * Getter used to know if the Tracker is listening at this time.
+     *
+     * @return true if the tracker is listening, false otherwise
+     */
+    public final boolean isListening() {
+        return isListening;
+    }
+
+    /**
      * Called when the tracker had found a location
+     *
      * @see android.location.LocationListener#onLocationChanged(android.location.Location)
      */
     @Override
@@ -158,6 +169,7 @@ public abstract class LocationTracker implements LocationListener {
 
     /**
      * Called when the tracker had found a location
+     *
      * @param location the found location
      */
     public abstract void onLocationFound(Location location);
@@ -170,6 +182,7 @@ public abstract class LocationTracker implements LocationListener {
     /**
      * Called when a provider has been disabled.
      * By default, this method do nothing but a Log on i
+     *
      * @see android.location.LocationListener#onProviderDisabled(java.lang.String)
      */
     @Override
@@ -181,6 +194,7 @@ public abstract class LocationTracker implements LocationListener {
     /**
      * Called when a provider has been enabled.
      * By default, this method do nothing but a Log on i
+     *
      * @see android.location.LocationListener#onProviderEnabled(java.lang.String)
      */
     @Override
@@ -192,6 +206,7 @@ public abstract class LocationTracker implements LocationListener {
     /**
      * Called when status has changed.
      * By default, this method do nothing but a Log on i
+     *
      * @see android.location.LocationListener#onStatusChanged(java.lang.String, int, android.os.Bundle)
      */
     @Override

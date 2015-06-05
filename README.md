@@ -16,7 +16,7 @@ Or add this to your `build.gradle` file
 	}
 	
 	dependencies {
-	        compile 'com.github.quentin7b:android-location-tracker:2.0'
+	        compile 'com.github.quentin7b:android-location-tracker:2.1'
 	}
 
 Dont forget to add the following permissions to your *AndroidManifest.xml*

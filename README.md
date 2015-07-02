@@ -16,7 +16,7 @@ Or add this to your `build.gradle` file
 	}
 	
 	dependencies {
-	        compile 'com.github.quentin7b:android-location-tracker:2.1'
+	        compile 'com.github.quentin7b:android-location-tracker:2.2
 	}
 
 Dont forget to add the following permissions to your *AndroidManifest.xml*
@@ -50,10 +50,11 @@ To do this, use the following constructor
 
 As an example, considering my `Activity` is named *MyActivity*
 
-	TrackerSettings settings = new TrackerSettings();
-	settings.setUseGPS(true);
-	settings.setUseNetwork(false);
-	settings.setUsePassive(false);
+	TrackerSettings settings = 
+        new TrackerSettings()
+            .setUseGPS(true)
+            .setUseNetwork(false)
+            .setUsePassive(false);
 	new LocationTracker(MyActivity.this, settings) {
 		
 		@Override
@@ -76,12 +77,13 @@ This, will call a location tracker that is looking *ONLY* for *GPS* updates.
 To specify those parameters, `LocationTracker` you can set more settings.
 Here is an example of call:
 	
-	TrackerSettings settings = new TrackerSettings();
-	settings.setUseGPS(true);
-	settings.setUseNetwork(true);
-	settings.setUsePassive(true);
-	settings.setTimeBetweenUpdates(30 * 60 * 1000);
-	settings.setMetersBetweenUpdates(100);
+	TrackerSettings settings = 
+        new TrackerSettings()
+            .setUseGPS(true)
+            .setUseNetwork(true)
+            .setUsePassive(true)
+            .setTimeBetweenUpdates(30 * 60 * 1000)
+            .setMetersBetweenUpdates(100);
 	new LocationTracker(this, settings) {
 		
 		@Override

@@ -18,28 +18,28 @@ package fr.quentinklein.slt;
 
 /**
  * @author Quentin Klein <klein.quentin@gmail.com>, Yasir.Ali <ali.yasir0@gmail.com>
- * <p>
- * Helps the LocationTracker to set the attributes:
- * <ul>
- *  <li>useGPS <ul><li>true if GPS usage is wanted</li><li>false otherwise</li></ul></li>
- *  <li>useNetwork <ul><li>true if Network usage is wanted</li><li>false otherwise</li></ul></li>
- *  <li>usePassive <ul><li>true if Passive usage is wanted</li><li>false otherwise</li></ul></li>
- *  <li>minTimeBetweenUpdates the minimum time interval between location updates in milliseconds</li>
- *  <li>minMetersBetweenUpdates the minimum distance between location updates, in meters</li>
- *  <li>timeout the minimum time delay before the tracker stops scanning for location in milliseconds</li>
- * </ul>
- * </p>
+ *         <p>
+ *         Helps the LocationTracker to set the attributes:
+ *         <ul>
+ *         <li>useGPS <ul><li>true if GPS usage is wanted</li><li>false otherwise</li></ul></li>
+ *         <li>useNetwork <ul><li>true if Network usage is wanted</li><li>false otherwise</li></ul></li>
+ *         <li>usePassive <ul><li>true if Passive usage is wanted</li><li>false otherwise</li></ul></li>
+ *         <li>minTimeBetweenUpdates the minimum time interval between location updates in milliseconds</li>
+ *         <li>minMetersBetweenUpdates the minimum distance between location updates, in meters</li>
+ *         <li>timeout the minimum time delay before the tracker stops scanning for location in milliseconds</li>
+ *         </ul>
+ *         </p>
  */
 public class TrackerSettings {
     /**
      * Basic tracker settings, with all the default parameters
      * <ul>
-     *     <li>5min between updates</li>
-     *     <li>100m between updates</li>
-     *     <li>100m between updates</li>
-     *     <li>1m timeout</li>
-     *     <li>Uses Network</li>
-     *     <li>Uses Passive</li>
+     * <li>5min between updates</li>
+     * <li>100m between updates</li>
+     * <li>100m between updates</li>
+     * <li>1m timeout</li>
+     * <li>Uses Network</li>
+     * <li>Uses Passive</li>
      * </ul>
      */
     public static final TrackerSettings DEFAULT = new TrackerSettings();
@@ -85,48 +85,90 @@ public class TrackerSettings {
      */
     private boolean usePassive = true;
 
-    public void setTimeBetweenUpdates(long timeBetweenUpdates) {
+    /**
+     * Set the delay between updates of the location
+     *
+     * @param timeBetweenUpdates the delay between the updates
+     * @return the instance of TrackerSettings
+     */
+    public TrackerSettings setTimeBetweenUpdates(long timeBetweenUpdates) {
         this.timeBetweenUpdates = timeBetweenUpdates;
+        return this;
     }
 
     public long getTimeBetweenUpdates() {
         return this.timeBetweenUpdates <= 0 ? DEFAULT_MIN_TIME_BETWEEN_UPDATES : this.timeBetweenUpdates;
     }
 
-    public void setMetersBetweenUpdates(float metersBetweenUpdates) {
+    /**
+     * Set the distance between updates of the location
+     *
+     * @param metersBetweenUpdates the distance between the updates
+     * @return the instance of TrackerSettings
+     */
+    public TrackerSettings setMetersBetweenUpdates(float metersBetweenUpdates) {
         this.metersBetweenUpdates = metersBetweenUpdates;
+        return this;
     }
 
     public float getMetersBetweenUpdates() {
         return this.metersBetweenUpdates <= 0 ? DEFAULT_MIN_METERS_BETWEEN_UPDATES : this.metersBetweenUpdates;
     }
 
-    public void setTimeout(int timeout) {
+    /**
+     * Set the timeout before giving up if no updates
+     *
+     * @param timeout the timeout before giving up
+     * @return the instance of TrackerSettings
+     */
+    public TrackerSettings setTimeout(int timeout) {
         this.timeout = timeout;
+        return this;
     }
 
     public int getTimeout() {
         return this.timeout <= -1 ? DEFAULT_TIMEOUT : this.timeout;
     }
 
-    public void setUseGPS(boolean useGPS) {
+    /**
+     * Set the usage of the GPS for the tracking
+     *
+     * @param useGPS true if the tracker should use the GPS, false if not
+     * @return the instance of TrackerSettings
+     */
+    public TrackerSettings setUseGPS(boolean useGPS) {
         this.useGPS = useGPS;
+        return this;
     }
 
     public boolean shouldUseGPS() {
         return this.useGPS;
     }
 
-    public void setUseNetwork(boolean useNetwork) {
+    /**
+     * Set the usage of network for the tracking
+     *
+     * @param useNetwork true if the tracker should use the network, false if not
+     * @return the instance of TrackerSettings
+     */
+    public TrackerSettings setUseNetwork(boolean useNetwork) {
         this.useNetwork = useNetwork;
+        return this;
     }
 
     public boolean shouldUseNetwork() {
         return this.useNetwork;
     }
 
-    public void setUsePassive(boolean usePassive) {
+    /**
+     * Set the usage of the passive sensor for the tracking
+     *
+     * @param usePassive true if the tracker should listen to passive updates, false if not
+     * @return the instance of TrackerSettings
+     */
+    public TrackerSettings setUsePassive(boolean usePassive) {
         this.usePassive = usePassive;
+        return this;
     }
 
     public boolean shouldUsePassive() {

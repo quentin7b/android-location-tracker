@@ -5,9 +5,7 @@ Android Simple Location Tracker is an Android library that helps you get user lo
 
 ### Installation
 
-Either clone this repository and import the `slt` module as a module dependency in `Android Studio`
-
-Or add this to your `build.gradle` file
+Add this to your `build.gradle` file
 
 	repositories {
 	    maven {
@@ -16,7 +14,7 @@ Or add this to your `build.gradle` file
 	}
 	
 	dependencies {
-	        compile 'com.github.quentin7b:android-location-tracker:2.2
+	        compile 'com.github.quentin7b:android-location-tracker:2.2'
 	}
 
 Dont forget to add the following permissions to your *AndroidManifest.xml*

@@ -16,17 +16,20 @@ package fr.quentinklein.slt;
  * limitations under the License.
  */
 
+import android.support.annotation.FloatRange;
+import android.support.annotation.IntRange;
+
 /**
  * @author Quentin Klein <klein.quentin@gmail.com>, Yasir.Ali <ali.yasir0@gmail.com>
  *         <p>
  *         Helps the LocationTracker to set the attributes:
  *         <ul>
  *         <li>useGPS <ul><li>true if GPS usage is wanted</li><li>false otherwise</li></ul></li>
- *         <li>useNetwork <ul><li>true if Network usage is wanted</li><li>false otherwise</li></ul></li>
+ *         <li>mUseNetwork <ul><li>true if Network usage is wanted</li><li>false otherwise</li></ul></li>
  *         <li>usePassive <ul><li>true if Passive usage is wanted</li><li>false otherwise</li></ul></li>
  *         <li>minTimeBetweenUpdates the minimum time interval between location updates in milliseconds</li>
  *         <li>minMetersBetweenUpdates the minimum distance between location updates, in meters</li>
- *         <li>timeout the minimum time delay before the tracker stops scanning for location in milliseconds</li>
+ *         <li>mTimeout the minimum time delay before the tracker stops scanning for location in milliseconds</li>
  *         </ul>
  *         </p>
  */
@@ -37,7 +40,7 @@ public class TrackerSettings {
      * <li>5min between updates</li>
      * <li>100m between updates</li>
      * <li>100m between updates</li>
-     * <li>1m timeout</li>
+     * <li>1m mTimeout</li>
      * <li>Uses Network</li>
      * <li>Uses Passive</li>
      * </ul>
@@ -54,7 +57,7 @@ public class TrackerSettings {
      */
     public static final float DEFAULT_MIN_METERS_BETWEEN_UPDATES = 100;
     /**
-     * The default value of timeout that helps to stop the listener if the listener is taking too much time
+     * The default value of mTimeout that helps to stop the listener if the listener is taking too much time
      * Its value is 1 minutes
      */
     public static final int DEFAULT_TIMEOUT = 60 * 1000;
@@ -62,28 +65,28 @@ public class TrackerSettings {
     /**
      * The minimum time interval between location updates, in milliseconds by default its value is {@link #DEFAULT_MIN_TIME_BETWEEN_UPDATES}
      */
-    private long timeBetweenUpdates = -1;
+    private long mTimeBetweenUpdates = -1;
     /**
      * The minimum distance between location updates in meters, by default its value is {@link #DEFAULT_MIN_METERS_BETWEEN_UPDATES}
      */
-    private float metersBetweenUpdates = -1;
+    private float mMetersBetweenUpdates = -1;
     /**
-     * The value of timeout to stop the listener after a specified time in case the listener is unable to get the location for a specified time
+     * The value of mTimeout to stop the listener after a specified time in case the listener is unable to get the location for a specified time
      */
-    private int timeout = -1;
+    private int mTimeout = -1;
 
     /**
      * Specifies if tracker should use the GPS (default is true)
      */
-    private boolean useGPS = true;
+    private boolean mUseGPS = true;
     /**
      * Specifies if tracker should use the Network (default is true)
      */
-    private boolean useNetwork = true;
+    private boolean mUseNetwork = true;
     /**
      * Specifies if tracker should use the Passive provider (default is true)
      */
-    private boolean usePassive = true;
+    private boolean mUsePassive = true;
 
     /**
      * Set the delay between updates of the location
@@ -91,13 +94,15 @@ public class TrackerSettings {
      * @param timeBetweenUpdates the delay between the updates
      * @return the instance of TrackerSettings
      */
-    public TrackerSettings setTimeBetweenUpdates(long timeBetweenUpdates) {
-        this.timeBetweenUpdates = timeBetweenUpdates;
+    public TrackerSettings setTimeBetweenUpdates(@FloatRange(from = 1) long timeBetweenUpdates) {
+        if (timeBetweenUpdates > 0) {
+            mTimeBetweenUpdates = timeBetweenUpdates;
+        }
         return this;
     }
 
     public long getTimeBetweenUpdates() {
-        return this.timeBetweenUpdates <= 0 ? DEFAULT_MIN_TIME_BETWEEN_UPDATES : this.timeBetweenUpdates;
+        return mTimeBetweenUpdates <= 0 ? DEFAULT_MIN_TIME_BETWEEN_UPDATES : mTimeBetweenUpdates;
     }
 
     /**
@@ -106,28 +111,32 @@ public class TrackerSettings {
      * @param metersBetweenUpdates the distance between the updates
      * @return the instance of TrackerSettings
      */
-    public TrackerSettings setMetersBetweenUpdates(float metersBetweenUpdates) {
-        this.metersBetweenUpdates = metersBetweenUpdates;
+    public TrackerSettings setMetersBetweenUpdates(@FloatRange(from = 1) float metersBetweenUpdates) {
+        if (metersBetweenUpdates > 0) {
+            mMetersBetweenUpdates = metersBetweenUpdates;
+        }
         return this;
     }
 
     public float getMetersBetweenUpdates() {
-        return this.metersBetweenUpdates <= 0 ? DEFAULT_MIN_METERS_BETWEEN_UPDATES : this.metersBetweenUpdates;
+        return mMetersBetweenUpdates <= 0 ? DEFAULT_MIN_METERS_BETWEEN_UPDATES : mMetersBetweenUpdates;
     }
 
     /**
      * Set the timeout before giving up if no updates
      *
-     * @param timeout the timeout before giving up
+     * @param timeout the mTimeout before giving up
      * @return the instance of TrackerSettings
      */
-    public TrackerSettings setTimeout(int timeout) {
-        this.timeout = timeout;
+    public TrackerSettings setTimeout(@IntRange(from = 1) int timeout) {
+        if (timeout > 0) {
+            mTimeout = timeout;
+        }
         return this;
     }
 
     public int getTimeout() {
-        return this.timeout <= -1 ? DEFAULT_TIMEOUT : this.timeout;
+        return this.mTimeout <= -1 ? DEFAULT_TIMEOUT : mTimeout;
     }
 
     /**
@@ -137,12 +146,12 @@ public class TrackerSettings {
      * @return the instance of TrackerSettings
      */
     public TrackerSettings setUseGPS(boolean useGPS) {
-        this.useGPS = useGPS;
+        mUseGPS = useGPS;
         return this;
     }
 
     public boolean shouldUseGPS() {
-        return this.useGPS;
+        return mUseGPS;
     }
 
     /**
@@ -152,12 +161,12 @@ public class TrackerSettings {
      * @return the instance of TrackerSettings
      */
     public TrackerSettings setUseNetwork(boolean useNetwork) {
-        this.useNetwork = useNetwork;
+        mUseNetwork = useNetwork;
         return this;
     }
 
     public boolean shouldUseNetwork() {
-        return this.useNetwork;
+        return mUseNetwork;
     }
 
     /**
@@ -167,11 +176,11 @@ public class TrackerSettings {
      * @return the instance of TrackerSettings
      */
     public TrackerSettings setUsePassive(boolean usePassive) {
-        this.usePassive = usePassive;
+        mUsePassive = usePassive;
         return this;
     }
 
     public boolean shouldUsePassive() {
-        return this.usePassive;
+        return mUsePassive;
     }
 }

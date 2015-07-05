@@ -3,6 +3,8 @@ android-location-tracker
 
 Android Simple Location Tracker is an Android library that helps you get user location with a object named `LocationTracker`
 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-android--location--tracker-green.svg?style=flat)](https://android-arsenal.com/details/1/2088)
+
 ### Installation
 
 Add this to your `build.gradle` file

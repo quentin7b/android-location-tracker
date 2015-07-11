@@ -25,11 +25,11 @@ import android.support.annotation.IntRange;
  *         Helps the LocationTracker to set the attributes:
  *         <ul>
  *         <li>useGPS <ul><li>true if GPS usage is wanted</li><li>false otherwise</li></ul></li>
- *         <li>mUseNetwork <ul><li>true if Network usage is wanted</li><li>false otherwise</li></ul></li>
+ *         <li>useNetwork <ul><li>true if Network usage is wanted</li><li>false otherwise</li></ul></li>
  *         <li>usePassive <ul><li>true if Passive usage is wanted</li><li>false otherwise</li></ul></li>
  *         <li>minTimeBetweenUpdates the minimum time interval between location updates in milliseconds</li>
  *         <li>minMetersBetweenUpdates the minimum distance between location updates, in meters</li>
- *         <li>mTimeout the minimum time delay before the tracker stops scanning for location in milliseconds</li>
+ *         <li>timeout the minimum time delay before the tracker stops scanning for location in milliseconds</li>
  *         </ul>
  *         </p>
  */
@@ -40,7 +40,7 @@ public class TrackerSettings {
      * <li>5min between updates</li>
      * <li>100m between updates</li>
      * <li>100m between updates</li>
-     * <li>1m mTimeout</li>
+     * <li>1m timeout</li>
      * <li>Uses Network</li>
      * <li>Uses Passive</li>
      * </ul>
@@ -57,7 +57,7 @@ public class TrackerSettings {
      */
     public static final float DEFAULT_MIN_METERS_BETWEEN_UPDATES = 100;
     /**
-     * The default value of mTimeout that helps to stop the listener if the listener is taking too much time
+     * The default value of timeout that helps to stop the listener if the listener is taking too much time
      * Its value is 1 minutes
      */
     public static final int DEFAULT_TIMEOUT = 60 * 1000;
@@ -125,7 +125,7 @@ public class TrackerSettings {
     /**
      * Set the timeout before giving up if no updates
      *
-     * @param timeout the mTimeout before giving up
+     * @param timeout the timeout before giving up
      * @return the instance of TrackerSettings
      */
     public TrackerSettings setTimeout(@IntRange(from = 1) int timeout) {

@@ -16,7 +16,7 @@ Add this to your `build.gradle` file
 	}
 	
 	dependencies {
-	        compile 'com.github.quentin7b:android-location-tracker:2.2'
+	        compile 'com.github.quentin7b:android-location-tracker:3.0'
 	}
 
 Dont forget to add the following permissions to your *AndroidManifest.xml*
@@ -151,46 +151,6 @@ Excepts the `onLocationChanged()` method, you can override all the [LocationList
 <li>onProviderEnabled(String provider)</li>
 <li>onStatusChanged(String provider, int status, Bundle extras)</li>
 </ul>
-
----
-v2.0 New settings version
----
-
-Add the `TrackerSettings` object to handle the multiple settings instead of parameters.
-Add a default `timeout` of `1min` before the tracker stops itself if no location found.
-
----
-v1.1 Adds
----
-
-### QuickFix
-
-`LocationTracker` has a new method called `quickFix()`.
-
-The only thing this method is doing is calling `onLocationChanged()` with the static field `location` as a parameter.
-
-For example, if in your code, you called a `LocationTracker` at a time and did something with the location.... Now you call it again, in a new instance of `LocationTracker`, and you want a location as quick as possible. 
-Just call `quickFix()` to get the last known location.
-
-Here is a code example
-
-	new LocationTracker(context){
-		@Override
-		public void onLocationFound(Location location) {
-			// Do some stuff when a new GPS Location has been found
-		}
-	}.quickFix();
-
-Or if it is stored in a variable
-
-	LocationTracker myTracker = new LocationTracker(context){
-		@Override
-		public void onLocationFound(Location location) {
-			// Do some stuff when a new GPS Location has been found
-		}
-	};
-
-	myTracker.quickFix();
 
 ### Contact & Questions
 

@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 22
-        versionCode 4
-        versionName "2.2"
+        versionCode 5
+        versionName "3.0"
     }
 
     libraryVariants.all { variant ->
@@ -29,4 +29,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+dependencies {
+    compile 'com.android.support:support-annotations:22.2.0'
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="provider_settings_message">Votre GPS semble désactivé, voulez-vous l\'activer?</string>
+    <string name="provider_settings_yes">Oui</string>
+    <string name="provider_settings_no">Non</string>
+</resources>

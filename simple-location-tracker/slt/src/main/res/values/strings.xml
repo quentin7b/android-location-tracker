@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">simple-location-tracker</string>
+    <string name="provider_settings_message">Your GPS seems to be disabled, do you want to enable it?</string>
+    <string name="provider_settings_yes">Yes</string>
+    <string name="provider_settings_no">No</string>
 </resources>

@@ -14,7 +14,7 @@ import android.util.Log;
 /**
  * @author Quentin Klein <klein.quentin@gmail.com>, Yasir.Ali <ali.yasir0@gmail.com>
  *         <p>
- *         Helper that tracks user sLocation
+ *         Helper that tracks user location
  *         </p>
  */
 public abstract class LocationTracker implements LocationListener {
@@ -24,8 +24,8 @@ public abstract class LocationTracker implements LocationListener {
      */
     private static final String TAG = "LocationTracker";
     /**
-     * The user sLocation
-     * This value is static because, wherever you call a LocationTracker, user sLocation is the same
+     * The user location
+     * This value is static because, wherever you call a LocationTracker, user location is the same
      */
     private static Location sLocation;
 
@@ -38,7 +38,7 @@ public abstract class LocationTracker implements LocationListener {
      */
     private boolean mIsListening = false;
     /**
-     * Indicates if Tracker has found the sLocation or not
+     * Indicates if Tracker has found the location or not
      */
     private boolean mIsLocationFound = false;
 
@@ -62,7 +62,7 @@ public abstract class LocationTracker implements LocationListener {
     }
 
     /**
-     * Customized LocationTracker, uses the specified services and starts listening for a sLocation.
+     * Customized LocationTracker, uses the specified services and starts listening for a location.
      *
      * @param context         Android context, uiContext is not mandatory.
      * @param trackerSettings {@link TrackerSettings}, the tracker settings
@@ -71,7 +71,7 @@ public abstract class LocationTracker implements LocationListener {
         this.mContext = context;
         this.mTrackerSettings = trackerSettings;
 
-        // Get the sLocation manager
+        // Get the location manager
         this.mLocationManagerService = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         // default
         if (sLocation == null && trackerSettings.shouldUseGPS()) {
@@ -88,12 +88,12 @@ public abstract class LocationTracker implements LocationListener {
     }
 
     /**
-     * Make the tracker listening for sLocation updates
+     * Make the tracker listening for location updates
      */
     @RequiresPermission(anyOf = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
     public final void startListen() {
         if (!this.mIsListening) {
-            Log.i(TAG, "LocationTracked is now listening for sLocation updates");
+            Log.i(TAG, "LocationTracked is now listening for location updates");
             // Listen for GPS Updates
             if (LocationUtils.isGpsProviderEnabled(mContext) && this.mTrackerSettings.shouldUseGPS()) {
                 mLocationManagerService.requestLocationUpdates(LocationManager.GPS_PROVIDER, this.mTrackerSettings.getTimeBetweenUpdates(), this.mTrackerSettings.getMetersBetweenUpdates(), this);
@@ -120,7 +120,7 @@ public abstract class LocationTracker implements LocationListener {
                     @Override
                     public void run() {
                         if (!mIsLocationFound && mIsListening) {
-                            Log.i(TAG, "No sLocation found in the meantime");
+                            Log.i(TAG, "No location found in the meantime");
                             LocationTracker.this.stopListen();
                             onTimeout();
                         }
@@ -128,20 +128,20 @@ public abstract class LocationTracker implements LocationListener {
                 }, mTrackerSettings.getTimeout());
             }
         } else {
-            Log.i(TAG, "Relax, LocationTracked is already listening for sLocation updates");
+            Log.i(TAG, "Relax, LocationTracked is already listening for location updates");
         }
     }
 
     /**
-     * Make the tracker stops listening for sLocation updates
+     * Make the tracker stops listening for location updates
      */
     public final void stopListen() {
         if (this.mIsListening) {
-            Log.i(TAG, "LocationTracked has stopped listening for sLocation updates");
+            Log.i(TAG, "LocationTracked has stopped listening for location updates");
             mLocationManagerService.removeUpdates(this);
             this.mIsListening = false;
         } else {
-            Log.i(TAG, "LocationTracked wasn't listening for sLocation updates anyway");
+            Log.i(TAG, "LocationTracked wasn't listening for location updates anyway");
         }
     }
 
@@ -164,27 +164,27 @@ public abstract class LocationTracker implements LocationListener {
     }
 
     /**
-     * Called when the tracker had found a sLocation
+     * Called when the tracker had found a location
      *
      * @see android.location.LocationListener#onLocationChanged(android.location.Location)
      */
     @Override
     public final void onLocationChanged(@NonNull Location location) {
-        Log.i(TAG, "Location has changed, new sLocation is " + location);
+        Log.i(TAG, "Location has changed, new location is " + location);
         LocationTracker.sLocation = new Location(location);
         mIsLocationFound = true;
         onLocationFound(location);
     }
 
     /**
-     * Called when the tracker had found a sLocation
+     * Called when the tracker had found a location
      *
-     * @param location the found sLocation
+     * @param location the found location
      */
     public abstract void onLocationFound(@NonNull Location location);
 
     /**
-     * Called when the tracker had not found any sLocation and the timeout just happened
+     * Called when the tracker had not found any location and the timeout just happened
      */
     public abstract void onTimeout();
 

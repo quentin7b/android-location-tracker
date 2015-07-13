@@ -48,14 +48,15 @@ To do this, use the following constructor
 
 	LocationTracker(Context context, TrackerSettings settings)
 
-As an example, considering my `Activity` is named *MyActivity*
+As an example:
 
-	TrackerSettings settings = 
-        new TrackerSettings()
-            .setUseGPS(true)
-            .setUseNetwork(false)
-            .setUsePassive(false);
-	new LocationTracker(MyActivity.this, settings) {
+	new LocationTracker(
+		context,
+		new TrackerSettings()
+            		.setUseGPS(true)
+            		.setUseNetwork(false)
+            		.setUsePassive(false)
+            	) {
 		
 		@Override
 		public void onLocationFound(Location location) {
@@ -78,13 +79,13 @@ To specify those parameters, `LocationTracker` you can set more settings.
 Here is an example of call:
 	
 	TrackerSettings settings = 
-        new TrackerSettings()
-            .setUseGPS(true)
-            .setUseNetwork(true)
-            .setUsePassive(true)
-            .setTimeBetweenUpdates(30 * 60 * 1000)
-            .setMetersBetweenUpdates(100);
-	new LocationTracker(this, settings) {
+	        new TrackerSettings()
+	            .setUseGPS(true)
+	            .setUseNetwork(true)
+	            .setUsePassive(true)
+	            .setTimeBetweenUpdates(30 * 60 * 1000)
+	            .setMetersBetweenUpdates(100);
+	new LocationTracker(context, settings) {
 		
 		@Override
 		public void onLocationFound(Location location) {
@@ -105,7 +106,7 @@ By default, after a `LocationTracker` is created, it automatically starts listen
 If you want to *stop* listening for updates, just call the `stopListen()` method.
 For example, if you need a *one shot* position, you can do that:
 
-	new LocationTracker(MyActivity.this) {
+	new LocationTracker(context) {
 		
 		@Override
 		public void onLocationFound(Location location) {

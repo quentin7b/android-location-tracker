@@ -24,6 +24,13 @@ Dont forget to add the following permissions to your *AndroidManifest.xml*
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	
+Be aware of `Android Marshmallow`'s new [permission system](https://developer.android.com/preview/features/runtime-permissions.html)
+
+	<permission-group 
+		android:name="android.permission-group.LOCATION"
+        	android:label="A label for your permission"
+        	android:description="A description for the permission" />
 
 ### Use
 

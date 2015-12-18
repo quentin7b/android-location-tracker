@@ -83,15 +83,13 @@ public abstract class LocationTracker implements LocationListener {
         if (sLocation == null && trackerSettings.shouldUsePassive()) {
             LocationTracker.sLocation = mLocationManagerService.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
         }
-        // Start Listen for updates
-        startListen();
     }
 
     /**
      * Make the tracker listening for location updates
      */
     @RequiresPermission(anyOf = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
-    public final void startListen() {
+    public final void startListening() {
         if (!this.mIsListening) {
             Log.i(TAG, "LocationTracked is now listening for location updates");
             // Listen for GPS Updates
@@ -121,7 +119,7 @@ public abstract class LocationTracker implements LocationListener {
                     public void run() {
                         if (!mIsLocationFound && mIsListening) {
                             Log.i(TAG, "No location found in the meantime");
-                            LocationTracker.this.stopListen();
+                            LocationTracker.this.stopListening();
                             onTimeout();
                         }
                     }
@@ -135,7 +133,7 @@ public abstract class LocationTracker implements LocationListener {
     /**
      * Make the tracker stops listening for location updates
      */
-    public final void stopListen() {
+    public final void stopListening() {
         if (this.mIsListening) {
             Log.i(TAG, "LocationTracked has stopped listening for location updates");
             mLocationManagerService.removeUpdates(this);

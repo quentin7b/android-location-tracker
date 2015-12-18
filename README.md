@@ -38,13 +38,14 @@ As its name says, it's a *simple* library.
 To create a tracker you just need to add the below code in your Android Activity/Service
 
 	// You can pass an ui Context but it is not mandatory getApplicationContext() would also works
-	new LocationTracker(context) {
+	LocationTracker tracker = new LocationTracker(context) {
 		
 		@Override
 		public void onLocationFound(Location location) {
 			// Do some stuff
 		}
-	}
+	};
+	tracker.startListening();
 
 And it's done, as soon as a location has been found, it will call the `onLocationFound()` method and you can do the job.
 
@@ -57,7 +58,7 @@ To do this, use the following constructor
 
 As an example:
 
-	new LocationTracker(
+	LocationTracker tracker = new LocationTracker(
 		context,
 		new TrackerSettings()
             		.setUseGPS(true)
@@ -69,7 +70,8 @@ As an example:
 		public void onLocationFound(Location location) {
 			// Do some stuff when a new GPS Location has been found
 		}
-	}
+	};
+	tracker.startListening()
 
 This, will call a location tracker that is looking *ONLY* for *GPS* updates.
 *Network* and *Passive* updates will not be catched by the Tracker.
@@ -91,14 +93,16 @@ Here is an example of call:
 	            .setUseNetwork(true)
 	            .setUsePassive(true)
 	            .setTimeBetweenUpdates(30 * 60 * 1000)
-	            .setMetersBetweenUpdates(100);
-	new LocationTracker(context, settings) {
-		
+	            .setMetersBetweenUpdates(100);	     
+	                   
+	LocationTracker tracker = new LocationTracker(context, settings) {
+	
 		@Override
 		public void onLocationFound(Location location) {
 			// Do some stuff when a new location has been found.
 		}
-	}
+	};
+	tracker.startListening();
 
 In this case, when a location is found, the tracker will not call `onLocationFound()` again during *30 minutes*.
 Moreover, if the distance between the new location and the older one is less than 100m, `onLocationFound()` will not be called.
@@ -110,39 +114,41 @@ Be aware that the *time* parameter's priority is higher than the *distance* para
 By default, after a `LocationTracker` is created, it automatically starts listening to updates... and never stops.
 `LocationTracker` has two methods to *start* and *stop* listening for updates.
 
-If you want to *stop* listening for updates, just call the `stopListen()` method.
+If you want to *stop* listening for updates, just call the `stopListening()` method.
 For example, if you need a *one shot* position, you can do that:
 
-	new LocationTracker(context) {
+	LocationTracker tracker = new LocationTracker(context) {
 		
 		@Override
 		public void onLocationFound(Location location) {
 			// Stop listening for updates
-			stopListen()
+			stopListening()
 			// Do some stuff when a new GPS Location has been found
 		}
-	}
+	};
+	tracker.startListening();
+	
 
 You can also do it in the `onPause()` Activity method if you want.
 
 	@Override
 	protected void onPause() {
 		if(myTracker != null) {
-			myTracker.stopListen();
+			myTracker.stopListening();
 		}
 		super.onPause();
 	}
 
 REMEMBER! A `LocationTracker` never stops untill you tell it to do so.
 
-You may want to start listening for updates after all. To do that, `LocationTracker` has a public method named `startListen()`, call it when you want.
+You may want to start listening for updates after all. To do that, `LocationTracker` has a public method named `startListening()`, call it when you want.
 
 For example, in the `onResume()` Activity method:
 
 	@Override
 	protected void onResume() {
 		if(myTracker != null) {
-			myTracker.startListen();
+			myTracker.startListening();
 		}
 		super.onResume();
 	}

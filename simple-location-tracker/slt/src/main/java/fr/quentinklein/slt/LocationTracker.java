@@ -57,6 +57,7 @@ public abstract class LocationTracker implements LocationListener {
      *
      * @param context Android context, uiContext is not mandatory.
      */
+    @RequiresPermission(anyOf = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
     public LocationTracker(@NonNull Context context) {
         this(context, TrackerSettings.DEFAULT);
     }
@@ -67,6 +68,7 @@ public abstract class LocationTracker implements LocationListener {
      * @param context         Android context, uiContext is not mandatory.
      * @param trackerSettings {@link TrackerSettings}, the tracker settings
      */
+    @RequiresPermission(anyOf = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
     public LocationTracker(@NonNull Context context, @NonNull TrackerSettings trackerSettings) {
         this.mContext = context;
         this.mTrackerSettings = trackerSettings;
@@ -83,6 +85,17 @@ public abstract class LocationTracker implements LocationListener {
         if (sLocation == null && trackerSettings.shouldUsePassive()) {
             LocationTracker.sLocation = mLocationManagerService.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
         }
+    }
+
+    /**
+     * Deprecated since 3.1
+     * Used to make the tracker listening for location updates
+     *
+     * @see #startListening()
+     */
+    @Deprecated
+    public final void startListen() {
+        startListening();
     }
 
     /**
@@ -131,8 +144,20 @@ public abstract class LocationTracker implements LocationListener {
     }
 
     /**
+     * Deprecated since 3.1
+     * Used to make the tracker stops listening for location updates
+     *
+     * @see #stopListening()
+     */
+    @Deprecated
+    public final void stopListen() {
+        stopListening();
+    }
+
+    /**
      * Make the tracker stops listening for location updates
      */
+    @RequiresPermission(anyOf = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
     public final void stopListening() {
         if (this.mIsListening) {
             Log.i(TAG, "LocationTracked has stopped listening for location updates");

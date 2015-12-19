@@ -14,20 +14,20 @@ Add this to your `build.gradle` file
 	        url "https://jitpack.io"
 	    }
 	}
-	
+
 	dependencies {
-	        compile 'com.github.quentin7b:android-location-tracker:3.0'
+	        compile 'com.github.quentin7b:android-location-tracker:3.1'
 	}
 
-Dont forget to add the following permissions to your *AndroidManifest.xml*
+Don't forget to add the following permissions to your *AndroidManifest.xml*
 
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-	
+
 Be aware of `Android Marshmallow`'s new [permission system](https://developer.android.com/preview/features/runtime-permissions.html)
 
-	<permission-group 
+	<permission-group
 		android:name="android.permission-group.LOCATION"
         	android:label="A label for your permission"
         	android:description="A description for the permission" />
@@ -39,7 +39,7 @@ To create a tracker you just need to add the below code in your Android Activity
 
 	// You can pass an ui Context but it is not mandatory getApplicationContext() would also works
 	LocationTracker tracker = new LocationTracker(context) {
-		
+
 		@Override
 		public void onLocationFound(Location location) {
 			// Do some stuff
@@ -65,7 +65,7 @@ As an example:
             		.setUseNetwork(false)
             		.setUsePassive(false)
             	) {
-		
+
 		@Override
 		public void onLocationFound(Location location) {
 			// Do some stuff when a new GPS Location has been found
@@ -86,17 +86,17 @@ This, will call a location tracker that is looking *ONLY* for *GPS* updates.
 
 To specify those parameters, `LocationTracker` you can set more settings.
 Here is an example of call:
-	
-	TrackerSettings settings = 
+
+	TrackerSettings settings =
 	        new TrackerSettings()
 	            .setUseGPS(true)
 	            .setUseNetwork(true)
 	            .setUsePassive(true)
 	            .setTimeBetweenUpdates(30 * 60 * 1000)
 	            .setMetersBetweenUpdates(100);	     
-	                   
+
 	LocationTracker tracker = new LocationTracker(context, settings) {
-	
+
 		@Override
 		public void onLocationFound(Location location) {
 			// Do some stuff when a new location has been found.
@@ -118,7 +118,7 @@ If you want to *stop* listening for updates, just call the `stopListening()` met
 For example, if you need a *one shot* position, you can do that:
 
 	LocationTracker tracker = new LocationTracker(context) {
-		
+
 		@Override
 		public void onLocationFound(Location location) {
 			// Stop listening for updates
@@ -127,7 +127,7 @@ For example, if you need a *one shot* position, you can do that:
 		}
 	};
 	tracker.startListening();
-	
+
 
 You can also do it in the `onPause()` Activity method if you want.
 
@@ -157,7 +157,7 @@ For example, in the `onResume()` Activity method:
 
 `LocationTracker` implements Android's [LocationListener](http://developer.android.com/reference/android/location/LocationListener.html) interface.
 
-By default, it does nothing but logging. 
+By default, it does nothing but logging.
 
 Excepts the `onLocationChanged()` method, you can override all the [LocationListener](http://developer.android.com/reference/android/location/LocationListener.html)'s metods, so here is the list:
 <ul>

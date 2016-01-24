@@ -103,27 +103,33 @@ public abstract class LocationTracker implements LocationListener {
      */
     @RequiresPermission(anyOf = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
     public final void startListening() {
-        if (!this.mIsListening) {
+        if (!mIsListening) {
             Log.i(TAG, "LocationTracked is now listening for location updates");
             // Listen for GPS Updates
-            if (LocationUtils.isGpsProviderEnabled(mContext) && this.mTrackerSettings.shouldUseGPS()) {
-                mLocationManagerService.requestLocationUpdates(LocationManager.GPS_PROVIDER, this.mTrackerSettings.getTimeBetweenUpdates(), this.mTrackerSettings.getMetersBetweenUpdates(), this);
-            } else if (this.mTrackerSettings.shouldUseGPS()) {
-                Log.i(TAG, "Problem, GPS_PROVIDER is not enabled");
+            if (mTrackerSettings.shouldUseGPS()) {
+                if (LocationUtils.isGpsProviderEnabled(mContext)) {
+                    mLocationManagerService.requestLocationUpdates(LocationManager.GPS_PROVIDER, mTrackerSettings.getTimeBetweenUpdates(), mTrackerSettings.getMetersBetweenUpdates(), this);
+                } else {
+                    onProviderError(new ProviderError(LocationManager.GPS_PROVIDER, "Provider is not enabled"));
+                }
             }
             // Listen for Network Updates
-            if (LocationUtils.isNetworkProviderEnabled(mContext) && this.mTrackerSettings.shouldUseNetwork()) {
-                mLocationManagerService.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, this.mTrackerSettings.getTimeBetweenUpdates(), this.mTrackerSettings.getMetersBetweenUpdates(), this);
-            } else if (this.mTrackerSettings.shouldUseNetwork()) {
-                Log.i(TAG, "Problem, NETWORK_PROVIDER is not enabled");
+            if (mTrackerSettings.shouldUseNetwork()) {
+                if (LocationUtils.isNetworkProviderEnabled(mContext)) {
+                    mLocationManagerService.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, mTrackerSettings.getTimeBetweenUpdates(), mTrackerSettings.getMetersBetweenUpdates(), this);
+                } else {
+                    onProviderError(new ProviderError(LocationManager.NETWORK_PROVIDER, "Provider is not enabled"));
+                }
             }
             // Listen for Passive Updates
-            if (LocationUtils.isPassiveProviderEnabled(mContext) && this.mTrackerSettings.shouldUsePassive()) {
-                mLocationManagerService.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, this.mTrackerSettings.getTimeBetweenUpdates(), this.mTrackerSettings.getMetersBetweenUpdates(), this);
-            } else if (this.mTrackerSettings.shouldUsePassive()) {
-                Log.i(TAG, "Problem, PASSIVE_PROVIDER is not enabled");
+            if (mTrackerSettings.shouldUsePassive()) {
+                if (LocationUtils.isPassiveProviderEnabled(mContext)) {
+                    mLocationManagerService.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, mTrackerSettings.getTimeBetweenUpdates(), this.mTrackerSettings.getMetersBetweenUpdates(), this);
+                } else {
+                    onProviderError(new ProviderError(LocationManager.PASSIVE_PROVIDER, "Provider is not enabled"));
+                }
             }
-            this.mIsListening = true;
+            mIsListening = true;
 
             // If user has set a timeout
             if (mTrackerSettings.getTimeout() != -1) {
@@ -132,7 +138,7 @@ public abstract class LocationTracker implements LocationListener {
                     public void run() {
                         if (!mIsLocationFound && mIsListening) {
                             Log.i(TAG, "No location found in the meantime");
-                            LocationTracker.this.stopListening();
+                            stopListening();
                             onTimeout();
                         }
                     }
@@ -157,12 +163,11 @@ public abstract class LocationTracker implements LocationListener {
     /**
      * Make the tracker stops listening for location updates
      */
-    @RequiresPermission(anyOf = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
     public final void stopListening() {
-        if (this.mIsListening) {
+        if (mIsListening) {
             Log.i(TAG, "LocationTracked has stopped listening for location updates");
             mLocationManagerService.removeUpdates(this);
-            this.mIsListening = false;
+            mIsListening = false;
         } else {
             Log.i(TAG, "LocationTracked wasn't listening for location updates anyway");
         }
@@ -245,6 +250,16 @@ public abstract class LocationTracker implements LocationListener {
     public void onStatusChanged(@NonNull String provider, int status, Bundle extras) {
         // By default do nothing but log
         Log.i(TAG, "Provider (" + provider + ") status has changed, new status is " + status);
+    }
+
+    /**
+     * Triggered when there was an error with a provider, most of the time, when this one is not enabled
+     *
+     * @param providerError the provider error
+     */
+    public void onProviderError(@NonNull ProviderError providerError) {
+        // By default do nothing but log
+        Log.w(TAG, "Provider (" + providerError.getProvider() + ")", providerError);
     }
 
 }

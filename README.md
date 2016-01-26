@@ -46,14 +46,20 @@ To create a tracker you just need to add the below code in your Android Activity
 
 ```java
 // You can pass an ui Context but it is not mandatory getApplicationContext() would also works
-LocationTracker tracker = new LocationTracker(context) {
-
-	@Override
-	public void onLocationFound(Location location) {
-		// Do some stuff
-	}
-};
-tracker.startListening();
+// Be aware if you target android 23, you'll need to handle the runtime-permissions !
+// see http://developer.android.com/reference/android/support/v4/content/ContextCompat.html
+if (    ContextCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+    && ContextCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        // You need to ask the user to enable the permissions
+} else {
+    LocationTracker tracker = new LocationTracker(ctx) {
+    	@Override
+    	public void onLocationFound(Location location) {
+    		// Do some stuff
+    	}
+    };
+    tracker.startListening();
+}
 ```
 
 And it's done, as soon as a location has been found, it will call the `onLocationFound()` method and you can do the job.

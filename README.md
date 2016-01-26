@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-        compile 'com.github.quentin7b:android-location-tracker:3.1'
+        compile 'com.github.quentin7b:android-location-tracker:3.2'
 }
 ```
 

@@ -12,7 +12,7 @@ import android.support.annotation.RequiresPermission;
 import android.util.Log;
 
 /**
- * @author Quentin Klein <klein.quentin@gmail.com>, Yasir.Ali <ali.yasir0@gmail.com>
+ * @author Quentin Klein <klein.quentin@gmail.com>, bunda virzha <bundavirzha91@gmail.com>
  *         <p>
  *         Helper that tracks user location
  *         </p>

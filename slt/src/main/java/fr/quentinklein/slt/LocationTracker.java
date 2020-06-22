@@ -1,6 +1,7 @@
 package fr.quentinklein.slt;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
@@ -59,7 +60,7 @@ public abstract class LocationTracker implements LocationListener {
      */
     @RequiresPermission(anyOf = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
     public LocationTracker(@NonNull Context context) {
-        this(context, TrackerSettings.DEFAULT);
+        this(context, new TrackerSettings());
     }
 
     /**
@@ -76,13 +77,13 @@ public abstract class LocationTracker implements LocationListener {
         // Get the location manager
         this.mLocationManagerService = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         // default
-        if (sLocation == null && trackerSettings.shouldUseGPS()) {
+        if (sLocation == null && trackerSettings.getShouldUseGPS()) {
             LocationTracker.sLocation = mLocationManagerService.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         }
-        if (sLocation == null && trackerSettings.shouldUseNetwork()) {
+        if (sLocation == null && trackerSettings.getShouldUseNetwork()) {
             LocationTracker.sLocation = mLocationManagerService.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         }
-        if (sLocation == null && trackerSettings.shouldUsePassive()) {
+        if (sLocation == null && trackerSettings.getShouldUsePassive()) {
             LocationTracker.sLocation = mLocationManagerService.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
         }
     }
@@ -93,6 +94,7 @@ public abstract class LocationTracker implements LocationListener {
      *
      * @see #startListening()
      */
+    @SuppressLint("MissingPermission")
     @Deprecated
     public final void startListen() {
         startListening();
@@ -106,7 +108,7 @@ public abstract class LocationTracker implements LocationListener {
         if (!mIsListening) {
             Log.i(TAG, "LocationTracked is now listening for location updates");
             // Listen for GPS Updates
-            if (mTrackerSettings.shouldUseGPS()) {
+            if (mTrackerSettings.getShouldUseGPS()) {
                 if (LocationUtils.isGpsProviderEnabled(mContext)) {
                     mLocationManagerService.requestLocationUpdates(LocationManager.GPS_PROVIDER, mTrackerSettings.getTimeBetweenUpdates(), mTrackerSettings.getMetersBetweenUpdates(), this);
                 } else {
@@ -114,7 +116,7 @@ public abstract class LocationTracker implements LocationListener {
                 }
             }
             // Listen for Network Updates
-            if (mTrackerSettings.shouldUseNetwork()) {
+            if (mTrackerSettings.getShouldUseNetwork()) {
                 if (LocationUtils.isNetworkProviderEnabled(mContext)) {
                     mLocationManagerService.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, mTrackerSettings.getTimeBetweenUpdates(), mTrackerSettings.getMetersBetweenUpdates(), this);
                 } else {
@@ -122,7 +124,7 @@ public abstract class LocationTracker implements LocationListener {
                 }
             }
             // Listen for Passive Updates
-            if (mTrackerSettings.shouldUsePassive()) {
+            if (mTrackerSettings.getShouldUseNetwork()) {
                 if (LocationUtils.isPassiveProviderEnabled(mContext)) {
                     mLocationManagerService.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, mTrackerSettings.getTimeBetweenUpdates(), this.mTrackerSettings.getMetersBetweenUpdates(), this);
                 } else {
@@ -131,19 +133,6 @@ public abstract class LocationTracker implements LocationListener {
             }
             mIsListening = true;
 
-            // If user has set a timeout
-            if (mTrackerSettings.getTimeout() != -1) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!mIsLocationFound && mIsListening) {
-                            Log.i(TAG, "No location found in the meantime");
-                            stopListening();
-                            onTimeout();
-                        }
-                    }
-                }, mTrackerSettings.getTimeout());
-            }
         } else {
             Log.i(TAG, "Relax, LocationTracked is already listening for location updates");
         }

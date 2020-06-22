@@ -109,7 +109,7 @@ public abstract class LocationTracker implements LocationListener {
             Log.i(TAG, "LocationTracked is now listening for location updates");
             // Listen for GPS Updates
             if (mTrackerSettings.getShouldUseGPS()) {
-                if (LocationUtils.isGpsProviderEnabled(mContext)) {
+                if (mLocationManagerService.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                     mLocationManagerService.requestLocationUpdates(LocationManager.GPS_PROVIDER, mTrackerSettings.getTimeBetweenUpdates(), mTrackerSettings.getMetersBetweenUpdates(), this);
                 } else {
                     onProviderError(new ProviderError(LocationManager.GPS_PROVIDER, "Provider is not enabled"));
@@ -117,7 +117,7 @@ public abstract class LocationTracker implements LocationListener {
             }
             // Listen for Network Updates
             if (mTrackerSettings.getShouldUseNetwork()) {
-                if (LocationUtils.isNetworkProviderEnabled(mContext)) {
+                if (mLocationManagerService.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
                     mLocationManagerService.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, mTrackerSettings.getTimeBetweenUpdates(), mTrackerSettings.getMetersBetweenUpdates(), this);
                 } else {
                     onProviderError(new ProviderError(LocationManager.NETWORK_PROVIDER, "Provider is not enabled"));
@@ -125,7 +125,7 @@ public abstract class LocationTracker implements LocationListener {
             }
             // Listen for Passive Updates
             if (mTrackerSettings.getShouldUseNetwork()) {
-                if (LocationUtils.isPassiveProviderEnabled(mContext)) {
+                if (mLocationManagerService.isProviderEnabled(LocationManager.PASSIVE_PROVIDER)) {
                     mLocationManagerService.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, mTrackerSettings.getTimeBetweenUpdates(), this.mTrackerSettings.getMetersBetweenUpdates(), this);
                 } else {
                     onProviderError(new ProviderError(LocationManager.PASSIVE_PROVIDER, "Provider is not enabled"));

@@ -63,7 +63,7 @@ class LocationTracker constructor(
     }
 
     // List used to register the listeners to notify
-    private val listeners: MutableList<Listener> = mutableListOf()
+    private val listeners: MutableSet<Listener> = mutableSetOf()
 
     /**
      * Indicates if Tracker is listening for updates or not
@@ -76,6 +76,20 @@ class LocationTracker constructor(
      */
     var hasLocationFound = false
         private set
+
+    /**
+     * Add a listener to the stack so it will be notified once a new location is found
+     * @param listener the listener to add to the list.
+     * @return true if the listener has been added, false otherwise
+     */
+    fun addListener(listener: Listener): Boolean = listeners.add(listener)
+
+    /**
+     * Remove a listener from the stack
+     * @param listener the listener to add to the list.
+     * @return true if the listener has been removed, false otherwise
+     */
+    fun removeListener(listener: Listener): Boolean = listeners.remove(listener)
 
     /**
      * Make the tracker listening for location updates

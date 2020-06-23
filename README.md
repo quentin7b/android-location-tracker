@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-        compile 'com.github.quentin7b:android-location-tracker:3.2'
+        compile 'com.github.quentin7b:android-location-tracker:4.0'
 }
 ```
 
@@ -42,24 +42,21 @@ Be aware of `Android Marshmallow`'s new [permission system](https://developer.an
 ### Use
 
 As its name says, it's a *simple* library.
-To create a tracker you just need to add the below code in your Android Activity/Service
+To create a tracker you just need to add the below code in your Android Activity / Service / WorkManager
 
-```java
-// You can pass an ui Context but it is not mandatory getApplicationContext() would also works
-// Be aware if you target android 23, you'll need to handle the runtime-permissions !
-// see http://developer.android.com/reference/android/support/v4/content/ContextCompat.html
-if (    ContextCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-    && ContextCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-        // You need to ask the user to enable the permissions
-} else {
-    LocationTracker tracker = new LocationTracker(ctx) {
-    	@Override
-    	public void onLocationFound(Location location) {
-    		// Do some stuff
-    	}
-    };
-    tracker.startListening();
-}
+> Be aware, you'll have to manage runtime permissions on Manifest.permission.ACCESS_FINE_LOCATION & Manifest.permission.ACCESS_COARSE_LOCATION
+
+#### Create the tracker
+
+Constructor is defined as this
+```kotlin
+LocationTracker(
+    val timeBetweenUpdates: Long = 5 * 60 * 1000.toLong(),
+    val metersBetweenUpdates: Float = 100f,
+    val shouldUseGPS: Boolean = true,
+    val shouldUseNetwork: Boolean = true,
+    val shouldUsePassive: Boolean = true
+)
 ```
 
 And it's done, as soon as a location has been found, it will call the `onLocationFound()` method and you can do the job.

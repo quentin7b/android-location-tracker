@@ -12,7 +12,21 @@ import android.support.annotation.NonNull
 import android.support.annotation.RequiresPermission
 import android.util.Log
 
-class LocationTracker constructor(private val trackerSettings: TrackerSettings = TrackerSettings()) {
+/**
+ * Build a LocationTracker
+ * @param timeBetweenUpdates The minimum time interval between location updates, in milliseconds by default its value is 5 minutes
+ * @param metersBetweenUpdates The minimum distance between location updates in meters, by default its value is 100m
+ * @param shouldUseGPS Specifies if tracker should use the GPS (default is true)
+ * @param shouldUseNetwork Specifies if tracker should use the Network (default is true)
+ * @param shouldUsePassive Specifies if tracker should use the Passive provider (default is true)
+ */
+class LocationTracker constructor(
+        val timeBetweenUpdates: Long = 5 * 60 * 1000.toLong(),
+        val metersBetweenUpdates: Float = 100f,
+        val shouldUseGPS: Boolean = true,
+        val shouldUseNetwork: Boolean = true,
+        val shouldUsePassive: Boolean = true
+) {
     // Android LocationManager
     private lateinit var locationManager: LocationManager
 
@@ -72,15 +86,15 @@ class LocationTracker constructor(private val trackerSettings: TrackerSettings =
         initManagerAndUpdateLastKnownLocation(context)
         if (!isListening) {
             // Listen for GPS Updates
-            if (trackerSettings.shouldUseGPS) {
+            if (shouldUseGPS) {
                 registerForLocationUpdates(LocationManager.GPS_PROVIDER)
             }
             // Listen for Network Updates
-            if (trackerSettings.shouldUseNetwork) {
+            if (shouldUseNetwork) {
                 registerForLocationUpdates(LocationManager.NETWORK_PROVIDER)
             }
             // Listen for Passive Updates
-            if (trackerSettings.shouldUseNetwork) {
+            if (shouldUseNetwork) {
                 registerForLocationUpdates(LocationManager.PASSIVE_PROVIDER)
             }
             isListening = true
@@ -126,13 +140,13 @@ class LocationTracker constructor(private val trackerSettings: TrackerSettings =
             context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         }
         // Update the lastKnownLocation
-        if (lastKnownLocation == null && trackerSettings.shouldUseGPS) {
+        if (lastKnownLocation == null && shouldUseGPS) {
             lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
         }
-        if (lastKnownLocation == null && trackerSettings.shouldUseNetwork) {
+        if (lastKnownLocation == null && shouldUseNetwork) {
             lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
         }
-        if (lastKnownLocation == null && trackerSettings.shouldUsePassive) {
+        if (lastKnownLocation == null && shouldUsePassive) {
             lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER)
         }
     }
@@ -140,7 +154,7 @@ class LocationTracker constructor(private val trackerSettings: TrackerSettings =
     @SuppressLint("MissingPermission")
     private fun registerForLocationUpdates(provider: String) {
         if (locationManager.isProviderEnabled(provider)) {
-            locationManager.requestLocationUpdates(provider, trackerSettings.timeBetweenUpdates, trackerSettings.metersBetweenUpdates, listener)
+            locationManager.requestLocationUpdates(provider, timeBetweenUpdates, metersBetweenUpdates, listener)
         } else {
             listeners.forEach { l -> l.onProviderError(ProviderError("Provider `$provider` is not enabled")) }
         }

@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.support.annotation.NonNull
 import android.support.annotation.RequiresPermission
 import android.util.Log
+import androidx.annotation.NonNull
 import androidx.annotation.RequiresPermission
 
 /**
@@ -121,12 +122,13 @@ class LocationTracker constructor(
 
     /**
      * Make the tracker stops listening for location updates
+     * @param clearListeners optional (default false) drop all the listeners if set to true
      */
-    fun stopListening(cleanListeners: Boolean = false) {
+    fun stopListening(clearListeners: Boolean = false) {
         if (isListening) {
             locationManager.removeUpdates(listener)
             isListening = false
-            if (cleanListeners) {
+            if (clearListeners) {
                 listeners.clear()
             }
             Log.i(TAG, "Stop listening for location updates")
@@ -137,6 +139,7 @@ class LocationTracker constructor(
 
     /**
      * Best effort, it calls [.onLocationChanged] with static field named [.lastKnownLocation] if it is not null
+     * @param context Context
      */
     @RequiresPermission(anyOf = [Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION])
     fun quickFix(@NonNull context: Context) {

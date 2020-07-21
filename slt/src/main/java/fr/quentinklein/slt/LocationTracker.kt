@@ -8,9 +8,9 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresPermission
+import android.util.Log
 
 /**
  * Build a LocationTracker

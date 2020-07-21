@@ -11,18 +11,19 @@ import android.os.Bundle
 import android.support.annotation.NonNull
 import android.support.annotation.RequiresPermission
 import android.util.Log
+import androidx.annotation.RequiresPermission
 
 /**
  * Build a LocationTracker
- * @param timeBetweenUpdates The minimum time interval between location updates, in milliseconds by default its value is 5 minutes
- * @param metersBetweenUpdates The minimum distance between location updates in meters, by default its value is 100m
+ * @param minTimeBetweenUpdates The minimum time interval between location updates, in milliseconds by default its value is 5 minutes
+ * @param minDistanceBetweenUpdates The minimum distance between location updates in meters, by default its value is 100m
  * @param shouldUseGPS Specifies if tracker should use the GPS (default is true)
  * @param shouldUseNetwork Specifies if tracker should use the Network (default is true)
  * @param shouldUsePassive Specifies if tracker should use the Passive provider (default is true)
  */
 class LocationTracker constructor(
-        val timeBetweenUpdates: Long = 5 * 60 * 1000.toLong(),
-        val metersBetweenUpdates: Float = 100f,
+        val minTimeBetweenUpdates: Long = 5 * 60 * 1000.toLong(),
+        val minDistanceBetweenUpdates: Float = 100f,
         val shouldUseGPS: Boolean = true,
         val shouldUseNetwork: Boolean = true,
         val shouldUsePassive: Boolean = true
@@ -168,7 +169,7 @@ class LocationTracker constructor(
     @SuppressLint("MissingPermission")
     private fun registerForLocationUpdates(provider: String) {
         if (locationManager.isProviderEnabled(provider)) {
-            locationManager.requestLocationUpdates(provider, timeBetweenUpdates, metersBetweenUpdates, listener)
+            locationManager.requestLocationUpdates(provider, minTimeBetweenUpdates, minDistanceBetweenUpdates, listener)
         } else {
             listeners.forEach { l -> l.onProviderError(ProviderError("Provider `$provider` is not enabled")) }
         }

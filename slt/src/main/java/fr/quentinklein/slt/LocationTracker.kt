@@ -8,8 +8,6 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
-import android.support.annotation.NonNull
-import android.support.annotation.RequiresPermission
 import android.util.Log
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresPermission

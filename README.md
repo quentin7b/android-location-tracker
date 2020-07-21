@@ -24,7 +24,6 @@ dependencies {
 Don't forget to add the following permissions to your *AndroidManifest.xml*
 
 ```xml
-<uses-permission android:name="android.permission.INTERNET" />
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 ```
@@ -51,8 +50,8 @@ Constructor is defined as this
 
 ```kotlin
 val locationTracker = LocationTracker(
-    val timeBetweenUpdates: Long = 5 * 60 * 1000.toLong(),
-    val metersBetweenUpdates: Float = 100f,
+    val minTimeBetweenUpdates: Long = 5 * 60 * 1000.toLong(),
+    val minDistanceBetweenUpdates: Float = 100f,
     val shouldUseGPS: Boolean = true,
     val shouldUseNetwork: Boolean = true,
     val shouldUsePassive: Boolean = true
@@ -86,8 +85,8 @@ locationTracker.stopListening()
 
 You can create a `LocationTracker` with custom parameters.
 
-- `timeBetweenUpdates` minimum time between two locations to respect before notifying the listeners in milliseconds). Default is *5 minutes*
-- `metersBetweenUpdates` minimum distance between two locations to respect before notifying the listeners in meters). Default is *100 meters*
+- `minTimeBetweenUpdates` minimum time between two locations to respect before notifying the listeners in milliseconds). Default is *5 minutes*
+- `minDistanceBetweenUpdates` minimum distance between two locations to respect before notifying the listeners in meters). Default is *100 meters*
 - `shouldUseGPS` specifies if the tracker should use the GPS locations or not. Default is *true*
 - `shouldUseNetwork` specifies if the tracker should use the GPS locations or not. Default is *true*
 - `shouldUsePassive` specifies if the tracker should use the passive locations or not. Default is *true*

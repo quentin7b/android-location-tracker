@@ -1,1 +1,2 @@
+include ':example'
 include ':slt'

@@ -30,9 +30,6 @@ class LocationTracker constructor(
     // Android LocationManager
     private lateinit var locationManager: LocationManager
 
-    // TAG for Logs
-    private val TAG = "LocationTracker"
-
     // Last known location
     private var lastKnownLocation: Location? = null
 
@@ -47,23 +44,24 @@ class LocationTracker constructor(
         }
 
         override fun onProviderDisabled(provider: String) {
-            Log.i(TAG, "Provider `$provider` has been disabled")
+            behaviorListener.forEach { l -> l.onProviderDisabled(provider) }
         }
 
         override fun onProviderEnabled(provider: String) {
-            // By default do nothing but log
-            Log.i(TAG, "Provider `$provider` has been enabled")
+            behaviorListener.forEach { l -> l.onProviderEnabled(provider) }
         }
 
         override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
-            // By default do nothing but log
-            Log.i(TAG, "Provider `$provider` status has changed, new status is `$status`")
+            behaviorListener.forEach { l -> l.onStatusChanged(provider, status, extras) }
         }
 
     }
 
     // List used to register the listeners to notify
     private val listeners: MutableSet<Listener> = mutableSetOf()
+
+    // List used to register the behavior listeners to notify
+    private val behaviorListener: MutableSet<BehaviorListener> = mutableSetOf()
 
     /**
      * Indicates if Tracker is listening for updates or not
@@ -86,10 +84,25 @@ class LocationTracker constructor(
 
     /**
      * Remove a listener from the stack
-     * @param listener the listener to add to the list.
+     * @param listener the listener to remove from the list.
      * @return true if the listener has been removed, false otherwise
      */
     fun removeListener(listener: Listener): Boolean = listeners.remove(listener)
+
+    /**
+     * Add a behavior listener to the stack so it will be notified when a provider is updated
+     * @param listener the listener to add to the list.
+     * @return true if the listener has been added, false otherwise
+     */
+    fun addBehaviorListener(listener: BehaviorListener): Boolean = behaviorListener.add(listener)
+
+    /**
+     * Remove a behavior listener from the stack
+     * @param listener the listener to remove from the list.
+     * @return true if the listener has been removed, false otherwise
+     */
+    fun removeBehaviorListener(listener: BehaviorListener): Boolean = behaviorListener.remove(listener)
+
 
     /**
      * Make the tracker listening for location updates
@@ -112,9 +125,6 @@ class LocationTracker constructor(
                 registerForLocationUpdates(LocationManager.PASSIVE_PROVIDER)
             }
             isListening = true
-            Log.i(TAG, "Now listening for location updates")
-        } else {
-            Log.i(TAG, "Relax, already listening for location updates")
         }
     }
 
@@ -129,9 +139,6 @@ class LocationTracker constructor(
             if (clearListeners) {
                 listeners.clear()
             }
-            Log.i(TAG, "Stop listening for location updates")
-        } else {
-            Log.i(TAG, "Not listening at this time")
         }
     }
 
@@ -189,6 +196,23 @@ class LocationTracker constructor(
          * @param providerError the error sent
          */
         fun onProviderError(providerError: ProviderError)
+    }
+
+    interface BehaviorListener {
+        /**
+         * See android.location.LocationListener#onProviderDisabled
+         */
+        fun onProviderDisabled(provider: String)
+
+        /**
+         * See android.location.LocationListener#onProviderEnabled
+         */
+        fun onProviderEnabled(provider: String)
+
+        /**
+         * See android.location.LocationListener#onStatusChanged
+         */
+        fun onStatusChanged(provider: String, status: Int, extras: Bundle)
     }
 
 }

@@ -54,4 +54,16 @@
         android:layout_height="48dp"
         android:text="Start" />
 
+    <Button
+        android:id="@+id/btn_clear_list"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Clear" />
+
+
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18px" />
 </LinearLayout>
